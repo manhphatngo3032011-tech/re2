@@ -36,9 +36,11 @@ const noImageList = [
 
 const yesImage = "img/giphy.gif";
 
-// SỰ KIỆN KHI BẤM NÚT "KHÔNG"
 btnNo.addEventListener('click', () => {
-    startMusic();
+    // 🎵 CHỈ PHÁT NHẠC NỀN KHI BẤM "KHÔNG"
+    if (bgMusic && bgMusic.paused) {
+        bgMusic.play().catch(err => console.log("Lỗi phát nhạc:", err));
+    }
 
     scale += 0.4;
     btnYes.style.transform = `scale(${scale})`;
@@ -70,9 +72,15 @@ btnNo.addEventListener('click', () => {
     }
 });
 
-// SỰ KIỆN KHI BẤM NÚT "CÓ"
+// -------------------------------------------------------------
+// SỰ KIỆN KHI BẤM NÚT "CÓ" -> DỪNG NHẠC NỀN & PHÁT TIẾNG VIDEO
+// -------------------------------------------------------------
 btnYes.addEventListener('click', () => {
-    startMusic();
+    // 🔇 1. Tắt/Dừng nhạc nền ngay lập tức
+    if (bgMusic) {
+        bgMusic.pause();
+        bgMusic.currentTime = 0;
+    }
 
     questionTitle.textContent = "Biết ngay mà! Daniel đẹp trai nhất lại còn vừa lạnh lùng và trầm tính nữa!";
 
@@ -81,12 +89,17 @@ btnYes.addEventListener('click', () => {
     surpriseImg.src = yesImage;
     surpriseImg.style.display = 'block';
 
-    // 🎬 HIỂN THỊ VÀ PHÁT 2 VIDEO BÊN NGOÀI KHUNG
+    // 🎬 2. Hiển thị 2 video, bật tiếng (muted = false) và phát video
     if (videoLeft && videoRight) {
         videoLeft.style.display = 'block';
         videoRight.style.display = 'block';
-        videoLeft.play();
-        videoRight.play();
+        
+        // Bật tiếng cho video
+        videoLeft.muted = false;
+        videoRight.muted = false;
+
+        videoLeft.play().catch(err => console.log("Lỗi phát video trái:", err));
+        videoRight.play().catch(err => console.log("Lỗi phát video phải:", err));
     }
 
     btnYes.style.position = 'static';
