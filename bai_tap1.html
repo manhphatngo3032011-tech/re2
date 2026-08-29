@@ -7,14 +7,16 @@
     <link rel="stylesheet" href="style2.css">
 </head>
 <body>
-    <main>
+    <main class="main-container">
+        <!-- Video bên trái -->
+        <video id="video-left" class="side-video" loop muted playsinline>
+            <source src="video/video1.mp4" type="video/mp4">
+        </video>
+
+        <!-- Khung nội dung chính -->
         <div class="box-wrapper">
             <h1 id="question-title">Daniel có đẹp trai không?</h1>
-            
-            <!-- Khung hiển thị hình ảnh -->
             <img id="surprise-img" class="hidden-img" src="" alt="Surprise Image">
-
-            <!-- Khung hiển thị câu nhắc nhở/thông điệp -->
             <p id="message-text" class="message-text"></p>
 
             <div class="button-container">
@@ -22,8 +24,12 @@
                 <button id="btn-no" class="button1 btn-no">Không</button>
             </div>
         </div>
-    </main>
 
+        <!-- Video bên phải -->
+        <video id="video-right" class="side-video" loop muted playsinline>
+            <source src="video/video2.mp4" type="video/mp4">
+        </video>
+    </main>
     <!-- 🎵 Thẻ nhạc nền (Thay link hoặc tên file nhạc của bạn vào src) -->
     <audio id="bg-music" loop>
         <source src="music/nhac.mp3" type="audio/mpeg">
