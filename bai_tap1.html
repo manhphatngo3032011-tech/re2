@@ -9,9 +9,13 @@
 <body>
     <main>
         <div class="box-wrapper">
-            <h1>Daniel có đẹp trai không?</h1>
+            <h1 id="question-title">Daniel có đẹp trai không?</h1>
             
-            <img id="surprise-img" class="hidden-img" src="https://i.gifer.com/7VE.gif" alt="Meme image">
+            <!-- Khung hiển thị hình ảnh -->
+            <img id="surprise-img" class="hidden-img" src="" alt="Surprise Image">
+
+            <!-- Khung hiển thị câu nhắc nhở/thông điệp -->
+            <p id="message-text" class="message-text"></p>
 
             <div class="button-container">
                 <button id="btn-yes" class="button1 btn-yes">Có</button>
@@ -19,6 +23,11 @@
             </div>
         </div>
     </main>
+
+    <!-- 🎵 Thẻ nhạc nền (Thay link hoặc tên file nhạc của bạn vào src) -->
+    <audio id="bg-music" loop>
+        <source src="nhac.mp3" type="audio/mpeg">
+    </audio>
 
     <script src="script.js"></script>
 </body>
