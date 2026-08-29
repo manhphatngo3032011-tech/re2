@@ -69,3 +69,35 @@ body {
     background-color: #e74c3c;
     color: white;
 }
+/* Thiết lập container chứa khung và 2 video */
+.main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+/* Kiểu dáng cho 2 video bên hông */
+.side-video {
+    display: none; /* Mặc định ẩn */
+    width: 250px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Tự động ẩn 2 video trên màn hình điện thoại nhỏ để tránh tràn giao diện */
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+    .side-video {
+        width: 100%;
+        max-width: 300px;
+        height: 200px;
+    }
+}
