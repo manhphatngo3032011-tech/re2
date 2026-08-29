@@ -75,31 +75,45 @@ btnNo.addEventListener('click', () => {
 // -------------------------------------------------------------
 // SỰ KIỆN KHI BẤM NÚT "CÓ" -> DỪNG NHẠC NỀN & PHÁT TIẾNG VIDEO
 // -------------------------------------------------------------
+// Trong sự kiện btnYes.addEventListener('click', ...)
 btnYes.addEventListener('click', () => {
-    // 🔇 1. Tắt/Dừng nhạc nền ngay lập tức
+    // 1. Tắt nhạc nền
     if (bgMusic) {
         bgMusic.pause();
         bgMusic.currentTime = 0;
     }
 
+    // 2. Đổi chữ & ảnh
     questionTitle.textContent = "Biết ngay mà! Daniel đẹp trai nhất lại còn vừa lạnh lùng và trầm tính nữa!";
-
     if (messageText) messageText.textContent = "";
-
     surpriseImg.src = yesImage;
     surpriseImg.style.display = 'block';
 
-    // 🎬 2. Hiển thị 2 video, bật tiếng (muted = false) và phát video
+    // 3. Xử lý phát video chuẩn Mobile
     if (videoLeft && videoRight) {
         videoLeft.style.display = 'block';
         videoRight.style.display = 'block';
-        
-        // Bật tiếng cho video
+
+        // Bắt buộc bỏ muted và gọi play trong handler click để pass qua chính sách Safari/Chrome
         videoLeft.muted = false;
         videoRight.muted = false;
 
-        videoLeft.play().catch(err => console.log("Lỗi phát video trái:", err));
-        videoRight.play().catch(err => console.log("Lỗi phát video phải:", err));
+        const playPromiseLeft = videoLeft.play();
+        if (playPromiseLeft !== undefined) {
+            playPromiseLeft.catch(() => {
+                // Nếu trình duyệt di động vẫn chặn tiếng, phát ở chế độ muted để video không bị dừng
+                videoLeft.muted = true;
+                videoLeft.play();
+            });
+        }
+
+        const playPromiseRight = videoRight.play();
+        if (playPromiseRight !== undefined) {
+            playPromiseRight.catch(() => {
+                videoRight.muted = true;
+                videoRight.play();
+            });
+        }
     }
 
     btnYes.style.position = 'static';
@@ -107,6 +121,5 @@ btnYes.addEventListener('click', () => {
     btnYes.style.width = 'auto';
     btnYes.style.height = 'auto';
     btnYes.style.fontSize = '16px';
-
     btnNo.style.display = 'none';
 });
